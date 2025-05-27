@@ -63,16 +63,16 @@ if __name__ == "__main__":
         print("Verifica che 'classificator/mood_classifier.pkl' sia presente.")
         run_python("recommender/offline_recommender.py")
 
-    # C) Demo SPARQL con rigenerazione opzionale dell'ontologia
+    # D) Prolog CLI con rigenerazione opzionale della KB simbolica
+    if prompt_yes("Vuoi avviare il recommender che utilizza Prolog?"):
+        if prompt_yes("Vuoi rigenerare la KB Prolog?"):
+            run_python("prolog/regenerate_kb_prolog.py")
+        run_python("recommender/prolog_recommender.py")
+
+    # D) Demo SPARQL con rigenerazione opzionale dell'ontologia
     if prompt_yes("Vuoi avviare la demo SPARQL?"):
         if prompt_yes("Vuoi rigenerare l'ontologia?"):
             run_python("sparql/regenerate_ontology.py")
         run_python("sparql/sparql_demo.py")
 
-    # D) Demo Prolog con rigenerazione opzionale della KB simbolica
-    if prompt_yes("Vuoi avviare la demo Prolog?"):
-        if prompt_yes("Vuoi rigenerare la KB Prolog?"):
-            run_python("prolog/regenerate_kb_prolog.py")
-        run_python("prolog/prolog_demo_runner.py")
-
-    print("=== PIPELINE COMPLETATA ===")
+    print("=== ESECUZIONE COMPLETA ===")
