@@ -29,23 +29,23 @@ run_all_tests :-
 
 test_recommend_by_mood :-
     write('Test recommend_by_mood:'), nl,
-    limited_results(recommend_by_mood(felice, _T), 20).
+    limited_results(recommend_by_mood(felice, T, A), 20).
 
 test_is_relaxing :-
     write('Test is_relaxing:'), nl,
-    limited_results(is_relaxing(_T), 20).
+    limited_results(is_relaxing(T, A), 20).
 
 test_is_energetic :-
     write('Test is_energetic:'), nl,
-    limited_results(is_energetic(_T), 20).
+    limited_results(is_energetic(T, A), 20).
 
 test_is_danceable :-
     write('Test is_danceable:'), nl,
-    limited_results(is_danceable(_T), 20).
+    limited_results(is_danceable(T, A), 20).
 
 test_happy_track_with_high_valence :-
     write('Test happy_track_with_high_valence:'), nl,
-    limited_results(happy_track_with_high_valence(_T), 20).
+    limited_results(happy_track_with_high_valence(T, A), 20).
 
 % === Test su subset limitato per similar_tracks_by_energy ===
 test_similar_tracks_by_energy_limited :-

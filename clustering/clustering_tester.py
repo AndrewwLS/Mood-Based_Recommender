@@ -90,7 +90,7 @@ def run_clustering():
     # Carica il dataset normalizzato e deduplicato
     df_scaled = preprocess_dataset()
 
-    # Campionamento di 10.000 tracce
+    # Campionamento tracce
     df_sampled = df_scaled.sample(n=30000, random_state=42).reset_index(drop=True)
 
     # Feature da clusterizzare

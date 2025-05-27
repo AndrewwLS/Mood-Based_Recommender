@@ -20,6 +20,9 @@ has_energy(Track, Energy) :-
     number(EVal),
     Energy is EVal.
 
+has_danceability(Track, Dance) :-
+    track(Track, _, _, Dance, _, _, _, _).
+
 % --- Variante limitata per test controllati ---
 has_energy_limited(Track, Energy) :-
     has_energy(Track, Energy),
@@ -31,37 +34,34 @@ has_mood_limited(Track, Mood) :-
     sub_atom(Track, 0, 1, _, C),
     member(C, ['A', 'B', 'C', 'D']).
 
-has_danceability(Track, Dance) :-
-    track(Track, _, _, Dance, _, _, _, _).
+% --- Regole simboliche con artista ---
 
-% --- Regole semplici ---
-recommend_by_mood(Mood, Track) :-
-    has_mood(Track, Mood).
+recommend_by_mood(Mood, Track, Artist) :-
+    track(Track, Artist, _, _, _, _, _, MoodString),
+    string(MoodString),
+    string_lower(MoodString, MoodLower),
+    atom_string(Mood, MoodLower).
 
-is_relaxing(Track) :-
-    has_energy(Track, Energy),
-    Energy =< 0.5.
+is_relaxing(Track, Artist) :-
+    track(Track, Artist, _, _, EVal, _, _, _),
+    number(EVal),
+    EVal =< 0.5.
 
-is_energetic(Track) :-
-    has_energy(Track, Energy),
-    Energy >= 0.75.
+is_energetic(Track, Artist) :-
+    track(Track, Artist, _, _, EVal, _, _, _),
+    number(EVal),
+    EVal >= 0.75.
 
-is_danceable(Track) :-
-    has_danceability(Track, Dance),
+is_danceable(Track, Artist) :-
+    track(Track, Artist, _, Dance, _, _, _, _),
+    number(Dance),
     Dance >= 0.7.
 
-% --- Energia simile (differenza <= 0.1, evita duplicati simmetrici) ---
-similar_tracks_by_energy(Track1, Track2) :-
-    has_energy(Track1, E1),
-    has_energy(Track2, E2),
-    Track1 @< Track2,
-    Diff is abs(E1 - E2),
-    Diff =< 0.1.
-
-% --- Valence alto per mood felice ---
-happy_track_with_high_valence(Track) :-
-    has_mood(Track, 'felice'),
-    has_valence(Track, Valence),
+happy_track_with_high_valence(Track, Artist) :-
+    track(Track, Artist, _, Valence, _, _, _, MoodString),
+    string(MoodString),
+    string_lower(MoodString, 'felice'),
+    number(Valence),
     Valence > 0.8.
 
 % --- Compatibilità tra generi ---
